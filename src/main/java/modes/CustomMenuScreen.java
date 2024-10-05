@@ -5,9 +5,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.component.ComponentChanges;
-import net.minecraft.component.DataComponentTypes;
-import net.minecraft.component.type.NbtComponent;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.nbt.NbtCompound;
@@ -31,6 +28,8 @@ public class CustomMenuScreen extends Screen {
     private boolean skynet = false;
     @Unique
     private boolean crashpeople = false;
+    @Unique
+    private boolean oldformat = false;
     @Unique
     private TextFieldWidget command1Field;
     @Unique
@@ -66,6 +65,12 @@ public class CustomMenuScreen extends Screen {
         int rightColumn = 320;
         int startY = height / 4;
         int spacing = 18;
+
+        addDrawableChild(new ButtonWidget.Builder(Text.literal("Format Sign for Ver <=1.19.4: OFF"), this::toggleOldFormat)
+                .position(leftColumn-10, startY - spacing)
+                .size(180, 18)
+                .build()
+        );
 
         modeButton = CyclingButtonWidget.<Modes>builder(mode -> Text.literal(mode.name()))
                 .values(Modes.values())
@@ -107,7 +112,6 @@ public class CustomMenuScreen extends Screen {
         cloneYField.setText("255");
         cloneYField.setChangedListener(this::onCloneYChanged);
         addDrawableChild(cloneYField);
-        cloneField = cloneYField;
 
         for (int i = 0; i < 4; i++) {
             int yPos = startY + spacing + spacing * (5 + i);
@@ -211,6 +215,11 @@ public class CustomMenuScreen extends Screen {
     private void toggleCrashPeople(ButtonWidget button) {
         crashpeople = !crashpeople;
         button.setMessage(Text.literal("Cmd 2: Crash People: " + (crashpeople ? "ON" : "OFF")));
+    }
+    @Unique
+    private void toggleOldFormat(ButtonWidget button) {
+        oldformat = !oldformat;
+        button.setMessage(Text.literal("Format Sign for Ver <=1.19.4: " + (oldformat ? "ON" : "OFF")));
     }
     @Unique
     private String command1Value = "";
@@ -328,24 +337,7 @@ public class CustomMenuScreen extends Screen {
 
         ItemStack stack = new ItemStack(Items.OAK_SIGN);
         NbtCompound blockEntityTag = new NbtCompound();
-        NbtCompound text = new NbtCompound();
-        NbtCompound text2 = new NbtCompound();
-        NbtList messages = new NbtList();
-
-        NbtCompound firstLine = new NbtCompound();
-        NbtCompound secondLine = new NbtCompound();
-        NbtCompound thirdLine = new NbtCompound();
-        NbtCompound fourthLine = new NbtCompound();
-        //thank you to Rob https://github.com/xnite for figuring out to use a newline character to make a blank sign. sneak level 100 achieved
-        firstLine.putString("text", "\n");
-        secondLine.putString("text", "\n");
-        thirdLine.putString("text", "\n");
-        fourthLine.putString("text", "\n");
-
-        NbtCompound clickEvent1 = new NbtCompound();
-        NbtCompound clickEvent2 = new NbtCompound();
-        NbtCompound clickEvent3 = new NbtCompound();
-        NbtCompound clickEvent4 = new NbtCompound();
+        NbtCompound tag = new NbtCompound();
 
         String commandValue1 = command1Value;
         String commandValue2 = command2Value;
@@ -391,35 +383,37 @@ public class CustomMenuScreen extends Screen {
             }
         }
 
-        clickEvent1.putString("action", "run_command");
-        clickEvent1.putString("value", commandValue1);
-        clickEvent2.putString("action", "run_command");
-        clickEvent2.putString("value", commandValue2);
-        clickEvent3.putString("action", "run_command");
-        clickEvent3.putString("value", commandValue3);
-        clickEvent4.putString("action", "run_command");
-        clickEvent4.putString("value", commandValue4);
-        firstLine.put("clickEvent", clickEvent1);
-        secondLine.put("clickEvent", clickEvent2);
-        thirdLine.put("clickEvent", clickEvent3);
-        fourthLine.put("clickEvent", clickEvent4);
+        //thank you to Rob https://github.com/xnite for figuring out to use a newline character to make a blank sign. sneak level 100 achieved
+        String commandText1 = "{\"text\":\"\\n\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + commandValue1 + "\"}}";
+        String commandText2 = "{\"text\":\"\\n\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + commandValue2 + "\"}}";
+        String commandText3 = "{\"text\":\"\\n\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + commandValue3 + "\"}}";
+        String commandText4 = "{\"text\":\"\\n\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"" + commandValue4 + "\"}}";
 
-        messages.add(NbtString.of(firstLine.toString()));
-        messages.add(NbtString.of(secondLine.toString()));
-        messages.add(NbtString.of(thirdLine.toString()));
-        messages.add(NbtString.of(fourthLine.toString()));
+        String[] messages = new String[4];
+        messages[0] = commandText1;
+        messages[1] = commandText2;
+        messages[2] = commandText3;
+        messages[3] = commandText4;
 
-        text.put("messages", messages);
-        text2.put("messages", messages);
-        blockEntityTag.put("front_text", text);
-        blockEntityTag.put("back_text", text2);
-        blockEntityTag.putString("id", "minecraft:oak_sign");
+        NbtList messageList = new NbtList();
+        for (String message : messages) {
+            messageList.add(NbtString.of(message));
+        }
+        if (!oldformat) {
+            blockEntityTag.put("front_text", new NbtCompound());
+            blockEntityTag.getCompound("front_text").put("messages", messageList);
+            blockEntityTag.put("back_text", new NbtCompound());
+            blockEntityTag.getCompound("back_text").put("messages", messageList);
 
-        var changes = ComponentChanges.builder()
-                .add(DataComponentTypes.BLOCK_ENTITY_DATA, NbtComponent.of(blockEntityTag))
-                .build();
+            tag.put("BlockEntityTag", blockEntityTag);
+        } else {
+            tag.put("BlockEntityTag", new NbtCompound());
 
-        stack.applyChanges(changes);
+            for (int i = 0; i < messages.length; i++) {
+                tag.getCompound("BlockEntityTag").putString("Text" + (i + 1), messages[i]);
+            }
+        }
+        stack.setNbt(tag);
 
         assert mc.interactionManager != null;
         mc.interactionManager.clickCreativeStack(stack, 36 + mc.player.getInventory().selectedSlot);
