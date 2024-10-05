@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "trouserstreak.forceopsign.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "client": [
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "InventoryScreenMixin"
+  ]
+}

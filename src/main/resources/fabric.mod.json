@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "forceopsign",
+  "version": "${version}",
+  "name": "ForceOPSign",
+  "description": "",
+  "authors": [],
+  "contact": {
+    "repo": "https://github.com/etianl/ForceOPSign"
+  },
+  "license": "All-Rights-Reserved",
+  "environment": "client",
+  "entrypoints": {},
+  "mixins": [
+    "trouserforceopsign.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
