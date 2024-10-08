@@ -7,6 +7,7 @@
   <p><strong>AN OPERATOR HAS TO PLACE THE SIGN!</strong></p>
   <p><strong>THE OPERATOR HAS TO BE IN CREATIVE MODE!</strong></p>
   <p><strong>SERVERS ON MINECRAFT VERSION 1.20.4 OR LESS REQUIRE THE SIGN TO BE MADE FROM A 1.20.4 CLIENT TO FORMAT THE DATA CORRECTLY!</strong></p>
+  <p><strong>There is a button in the 1.20.4 build that must be enabled to format the data correctly for worlds of version 1.19.4 or less!</strong></p>
   <p><strong>Only Operators</strong> clicking the sign can execute permission level 3 commands such as <strong>/op</strong></p>
   <p><strong>Any player</strong> clicking the sign can execute permission level 2 commands such as <strong>/fill, /gamerule, /setblock, and more</strong></p>
 </div>
