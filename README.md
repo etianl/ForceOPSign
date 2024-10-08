@@ -10,7 +10,10 @@
   <p><strong>There is a button in the 1.20.4 build that must be enabled to format the data correctly for worlds of version 1.19.4 or less!</strong></p>
   <p><strong>Only Operators</strong> clicking the sign can execute permission level 3 commands such as <strong>/op</strong></p>
   <p><strong>Any player</strong> clicking the sign can execute permission level 2 commands such as <strong>/fill, /gamerule, /setblock, and more</strong></p>
+  <p><strong>In Minecraft versions 1.8-1.8.4 ANYONE with creative mode can place and execute the signs!</strong></p>
 </div>
+
+Credits to **CrushedPixel** for their first implementation of a ForceOP sign module https://www.youtube.com/watch?v=KofDNaPZWfg, and to **etianl** for writing this implementation.
 
 ## Features:
 - The **"ForceOP"** mode gives you operator status.
@@ -38,6 +41,3 @@
 - **GAMERULE = Permission Level 2**
 - **KILL = Permission Level 2**
 - **EXECUTE = Permission Level 2**
-
-
-Credits to **CrushedPixel** for their first implementation of a ForceOP sign module https://www.youtube.com/watch?v=KofDNaPZWfg, and to **etianl** for writing this implementation.
