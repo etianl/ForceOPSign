@@ -1,8 +1,9 @@
 <div align="center">
   <h1><strong>ForceOpSign</strong></h1>
   <p><strong>This mod allows you to create highly illegal and malicious signs in Minecraft!</strong></p>
-  <p><strong>Demonstration video: https://www.youtube.com/watch?v=YICXSxkvBfQ</strong></p>
-  <p>This requires<strong> Creative Mode</strong> for you to make the illegal sign! The signs placed appear blank and commands executed may not appear in the server chat response for commands. There is also a preset option for griefing the server and crashing all players. </p>
+  <p><strong>Demonstration video: <a href="https://www.youtube.com/watch?v=YICXSxkvBfQ">https://www.youtube.com/watch?v=YICXSxkvBfQ</a></strong></p>
+    <p><strong>Discord server for updates and help: <a href="https://discord.gg/Az3G3p4ZCj">https://discord.gg/Az3G3p4ZCj</a></strong></p>
+<p>This requires<strong> Creative Mode</strong> for you to make the illegal sign! The signs placed appear blank and commands executed may not appear in the server chat response for commands. There is also a preset option for griefing the server and crashing all players. </p>
   <p><strong>After making the sign give it to an operator and have them place and click it while they are also in creative mode.</strong></p>
   <p><strong>AN OPERATOR HAS TO PLACE THE SIGN!</strong></p>
   <p><strong>THE OPERATOR HAS TO BE IN CREATIVE MODE!</strong></p>
