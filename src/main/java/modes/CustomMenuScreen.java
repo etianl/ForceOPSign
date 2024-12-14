@@ -413,7 +413,7 @@ public class CustomMenuScreen extends Screen {
         text2.put("messages", messages);
         blockEntityTag.put("front_text", text);
         blockEntityTag.put("back_text", text2);
-        blockEntityTag.putString("id", "minecraft:oak_sign");
+        blockEntityTag.putString("id", "minecraft:sign");
 
         var changes = ComponentChanges.builder()
                 .add(DataComponentTypes.BLOCK_ENTITY_DATA, NbtComponent.of(blockEntityTag))
@@ -443,4 +443,3 @@ public class CustomMenuScreen extends Screen {
         mc.setScreen(parent);
     }
 }
-
